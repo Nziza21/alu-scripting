@@ -1,18 +1,22 @@
 #!/usr/bin/python3
-"""DOCS"""
+"""This module contains a function that prints the first 10 hot posts of a subreddit using the Reddit API."""
 import requests
 
 
 def top_ten(subreddit):
-    """Docs"""
-    reddit_url = "https://www.reddit.com/r/{}/hot.json" \
-        .format(subreddit)
-    headers = headers = {'User-agent': 'Mozilla/5.0'}
-    response = requests.get(reddit_url, headers=headers)
+    """Prints the titles of the first 10 hot posts of a subreddit."""
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
+    headers = {"User-Agent": "alu-scripting-project/1.0"}
 
-    if response.status_code == 200:
-        data = response.json()['data']
-        for post in data['children'][:10]:
-            print(post['data']['title'])
-    else:
+    try:
+        res = requests.get(url, headers=headers, allow_redirects=False)
+        if res.status_code != 200:
+            print(None)
+            return
+
+        posts = res.json().get("data", {}).get("children", [])
+        for post in posts:
+            print(post.get("data", {}).get("title"))
+
+    except Exception:
         print(None)
