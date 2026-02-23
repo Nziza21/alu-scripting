@@ -12,7 +12,7 @@ def top_ten(subreddit):
         return
 
     url = 'https://www.reddit.com/r/{}/hot/.json'.format(subreddit)
-    user_agent = {'User-agent': 'python:holberton.top_ten:v1.0 (by /u/holberton)'}  # <-- change here
+    user_agent = {'User-agent': 'python:holberton.top_ten:v1.0'}
     params = {'limit': 10}
 
     response = get(url, headers=user_agent, params=params,
